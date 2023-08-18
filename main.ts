@@ -18,8 +18,10 @@ server.on("connection", (socket)=>{
         console.log(arrBuffer)
 
         sockets.map(item=>{
-            
-            item.write(Buffer.from(`0\\${arrBuffer[1]}\\${arrBuffer[2]}`))
+            //if(item.address == socket.address && item.remotePort == socket.remotePort) return;
+            const bufferSend = Buffer.from(`0\\${arrBuffer[1]}\\${arrBuffer[2]}`)
+            console.log(bufferSend, "Teste")
+            item.write(bufferSend)
         })
     })
 

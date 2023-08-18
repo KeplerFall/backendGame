@@ -1,5 +1,9 @@
 import * as net from "net";
 
+enum dataType{
+	move
+}
+
 const sockets = new Array<net.Socket>;
 const server = net.createServer();
 
@@ -7,9 +11,14 @@ server.on("connection", (socket)=>{
     console.log(`Connected: ${socket.remoteAddress}:${socket.remotePort}`);
     sockets.push(socket)
 
-    socket.on("data", (data)=>{
-        console.log(`Data: ${socket.remoteAddress}: ${data}`);
-        //Tratamento da data
+    socket.on("data", (data: Buffer)=>{
+        const stringBuffer = data.toString()
+        const arrBuffer = stringBuffer.split("\\") 
+
+        sockets.map(item=>{
+            if(item.address == socket.address && item.remotePort == socket.remotePort) return;
+            item.write(data)
+        })
     })
 
     socket.on("close", (data)=>{
@@ -27,4 +36,5 @@ server.on("connection", (socket)=>{
 
 server.listen(8889, ()=>{
     console.log(`Server listening on port ${8889}`)
+    console.log(dataType.move)
 })

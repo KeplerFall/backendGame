@@ -20,7 +20,7 @@ server.on("connection", (socket)=>{
 
         switch(parseInt(arrBuffer[0])){
             case dataType.ping:
-                if(arrBuffer[1] == "request"){lastping = Date.now()}
+                if(arrBuffer[1] == "request"){lastping = Date.now(); console.log("ping requested"); socket.write(Buffer.from(`ping\\`))}
                 if(arrBuffer[1] == "response"){console.log(`Current Ping: ${Date.now() - lastping}`)}
             break;
         }

@@ -15,6 +15,8 @@ server.on("connection", (socket)=>{
         const stringBuffer = data.toString()
         const arrBuffer = stringBuffer.split("\\") 
 
+        console.log(arrBuffer)
+
         sockets.map(item=>{
             if(item.address == socket.address && item.remotePort == socket.remotePort) return;
             item.write(data)

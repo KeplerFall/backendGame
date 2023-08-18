@@ -19,7 +19,7 @@ server.on("connection", (socket)=>{
 
         sockets.map(item=>{
             //if(item.address == socket.address && item.remotePort == socket.remotePort) return;
-            const bufferSend = Buffer.from(`0\\${arrBuffer[1]}\\${arrBuffer[2]}`)
+            const bufferSend = Buffer.from(`0\\${arrBuffer[1]}\\${arrBuffer[2]}\\`)
             console.log(bufferSend, "Teste")
             item.write(bufferSend)
         })

@@ -1,8 +1,11 @@
 import * as net from "net";
 
 enum dataType{
-	move
+	move,
+    ping
 }
+
+let lastping:number = -1;
 
 const sockets = new Array<net.Socket>;
 const server = net.createServer();
@@ -14,6 +17,13 @@ server.on("connection", (socket)=>{
     socket.on("data", (data: Buffer)=>{
         const stringBuffer = data.toString()
         const arrBuffer = stringBuffer.split("\\") 
+
+        switch(parseInt(arrBuffer[0])){
+            case dataType.ping:
+                if(arrBuffer[1] == "request"){lastping = Date.now()}
+                if(arrBuffer[1] == "response"){console.log(`Current Ping: ${Date.now() - lastping}`)}
+            break;
+        }
 
         console.log(arrBuffer)
 

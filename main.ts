@@ -1,6 +1,6 @@
-const net = require("net")
+import * as net from "net";
 
-const sockets = [];
+const sockets = new Array<net.Socket>;
 const server = net.createServer();
 
 server.on("connection", (socket)=>{

@@ -16,8 +16,9 @@ server.on("connection", (socket)=>{
 
     socket.on("data", (data: Buffer)=>{
         const stringBuffer = data.toString()
-        const arrBuffer = stringBuffer.split("\\") 
-
+        const arrBuffer: Array<string> = stringBuffer.split("\\") 
+        arrBuffer[0].includes("\x00") ? arrBuffer[0] = arrBuffer[0].replace("\x00", "") : null
+        
         switch(parseInt(arrBuffer[0])){
             case dataType.ping:
                 if(arrBuffer[1] == "request"){lastping = Date.now(); console.log("ping requested"); socket.write(Buffer.from(`${dataType.ping}\\`))}
